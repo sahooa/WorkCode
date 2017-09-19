@@ -1,0 +1,33 @@
+import MySQLdb
+import csv
+db = MySQLdb.connect(host="comm-infocntr-amer-dev-01.ciean0huuvrb.us-east-1.rds.amazonaws.com", 
+                     user="infocntrdevmstr",         # your username
+                     passwd="infocntrdevmstr_201708A",  # your password
+                     db="devinfocntr")  
+target = db.cursor()
+target.execute(" TRUNCATE TABLE TPAMT")
+target.execute(" TRUNCATE TABLE TPALT")
+target.execute(" TRUNCATE TABLE TPAMH")
+target.execute(" TRUNCATE TABLE TPALH")
+file = open ('Data\Q4 2016 DET.txt','r')
+for line in file:
+    line_id = line[0:5]
+    if line_id == 'TPAMT':
+
+        target.execute ("Insert into TPAMT VALUES('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')" %(line[0:5],line[5:11],line[11:18],line[18:26],line[26:32],line[32:37],line[37:42],line[42:50],line[50:64],line[64:78],line[78:92],'')) 
+    if line_id == 'TPALT':
+
+        target.execute ("Insert into TPALT VALUES('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')" %(line[0:5],line[5:11],line[11:18],line[18:24],line[24:32],line[32:38],line[38:43],line[43:48],line[48:55],line[55:66],line[66:77],line[77:88],'')) 
+    if line_id == 'TPAMH':
+
+        target.execute ("Insert into TPAMH VALUES('%s','%s','%s','%s','%s','%s','%s','%s')" %(line[0:5],line[5:11],line[11:18],line[18:26],line[26:32],line[32:37],line[37:42],'')) 
+    if line_id == 'TPALH':
+
+        target.execute ("Insert into TPALH VALUES('%s','%s','%s','%s','%s','%s','%s','%s','%s')" %(line[0:5],line[5:11],line[11:18],line[18:24],line[24:32],line[32:38],line[38:43],line[43:48],''))
+    if line_id == 'DETCG':
+
+        target.execute ("Insert into DETCG VALUES('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')" %(line[0:5],line[5:11],line[11:18],line[18:38],line[38:44],line[44:63],line[63:75],line[75:77],line[77:80],line[80:90],line[90:98],line[99:100],line[100:115],line[115:126],line[126:137],line[137:148],line[148:154],line[154:160],''))
+
+db.commit()
+db.close()
+print "Done"
